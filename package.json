@@ -1,0 +1,23 @@
+{
+  "name": "react-icon-rating",
+  "version": "0.0.1",
+  "description": "react component for simple web font backed ratings",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "js",
+    "react.js",
+    "rating",
+    "stars",
+    "component"
+  ],
+  "author": "Daryl Lau",
+  "license": "MIT",
+  "dependencies": {
+    "envify": "~1.2.1",
+    "react": "~0.9.0"
+  }
+}
