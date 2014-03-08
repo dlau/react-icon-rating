@@ -15,13 +15,20 @@ gif:
 ---
 ####Examples showing five stars
 ----
+Declaration:
+
+`var IconRating = require('react-icon-rating')`
+
+
 Font-Awesome 4:
 
 `<IconRating toggledClassName="fa fa-star" untoggledClassName="fa fa-star-o"/>`
 
+
 Glyphicons:
 
 `<IconRating toggledClassName="glyphicon glyphicon-star" untoggledClassName="glyphicon glyphicon-star-empty"/>`
+
 
 Others:
     The component assumes the icon is contained inside an <i> tag, fill the class names in accordingly.
