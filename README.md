@@ -16,9 +16,9 @@ gif:
 ####Examples showing five stars
 ----
 Font-Awesome 4:
-    <IconRating toggledClassName="fa fa-star" untoggledClassName="fa fa-star-o"/>
+`<IconRating toggledClassName="fa fa-star" untoggledClassName="fa fa-star-o"/>`
 Glyphicons:
-    <IconRating toggledClassName="glyphicon glyphicon-star" untoggledClassName="glyphicon glyphicon-star-empty"/>
+`<IconRating toggledClassName="glyphicon glyphicon-star" untoggledClassName="glyphicon glyphicon-star-empty"/>`
 Others:
     The component assumes the icon is contained inside an <i> tag, fill the class names in accordingly.
     Do note, that you can pass additional classes to the IconRating for styling purposes.
