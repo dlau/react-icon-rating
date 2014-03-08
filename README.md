@@ -5,7 +5,7 @@ A react component for simple straightforward rating manipulation
 
 gif:
 
-![gif](https://www.dropbox.com/s/z05ic0tx2ws4ts1/ratinggif.gif)
+![gif](http://imgur.com/4fjlj5h)
 
 ###Installation
 ---
