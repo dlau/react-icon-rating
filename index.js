@@ -6,12 +6,9 @@ var Icon = React.createClass({displayName: 'Icon',
     var iStyle = {
       cursor : 'pointer'
     };
-    var className =
-      (this.props.className ? this.props.className + ' ' : '') + 
-      (this.props.toggled ? this.props.toggledClassName : this.props.untoggledClassName)
-    ;
+    var className = this.props.toggled ? this.props.toggledClassName : this.props.untoggledClassName;
     return (
-      React.DOM.i( {className:className, onMouseEnter:this.props.onMouseEnter, style:iStyle, onClick:this.props.onClickRating})
+      React.DOM.i( {className:className, onMouseMove:this.props.onMouseEnter, style:iStyle, onClick:this.props.onClickRating})
     );
   }
 });
@@ -26,8 +23,12 @@ var IconRating = React.createClass({displayName: 'IconRating',
     };
   },
   onMouseEnter : function(currentRating, e, id){
+    var rating = currentRating;
+    if((e.nativeEvent.clientX) < (e.target.offsetLeft + (e.target.offsetWidth / 2))){
+      rating -= .5;
+    }
     this.setState({
-      currentRating_hover : currentRating,
+      currentRating_hover : rating,
       hovering : true
     });
   },
@@ -38,24 +39,31 @@ var IconRating = React.createClass({displayName: 'IconRating',
   },
   onClickRating : function(currentRating, e, id){
     this.setState({
-      currentRating : currentRating
+      currentRating : this.state.currentRating_hover
     });
     if(this.props.onChange){
       this.props.onChange(currentRating);
     }
   },
   render: function() {
-    var currentRating = [];
-    var toggled = false;
+    var ratings = [];
+    var toggled = false, rating, halfClassName;
     for(var i=1;i<=this.state.max;++i){
-      toggled = i <= this.state['currentRating' + (this.state.hovering ? '_hover':'')] ? true : false;
-      currentRating.push(
-          Icon( {key:i, toggledClassName:this.props.toggledClassName, untoggledClassName:this.props.untoggledClassName, onMouseEnter:this.onMouseEnter.bind(this,i), onClickRating:this.onClickRating.bind(this,i), toggled:toggled} )
+      rating = this.state['currentRating' + (this.state.hovering ? '_hover':'')];
+      toggled = i <= Math.round(rating) ? true : false;
+      halfClassName = null;
+      if(this.props.halfClassName &&
+         Math.round(rating) == i &&
+         Math.floor(rating) != rating){
+          halfClassName = this.props.halfClassName;
+      }
+      ratings.push(
+          Icon( {key:i, toggledClassName:halfClassName || this.props.toggledClassName, untoggledClassName:this.props.untoggledClassName, onMouseEnter:this.onMouseEnter.bind(this,i), onClickRating:this.onClickRating.bind(this,i), toggled:toggled})
       );
     }
     return (
       React.DOM.div( {onMouseLeave:this.onMouseLeave}, 
-        currentRating
+        ratings
       )
     );
   }
