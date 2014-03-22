@@ -18,6 +18,6 @@
   "license": "MIT",
   "dependencies": {
     "envify": "~1.2.1",
-    "react": "~0.9.0"
+    "react": "~0.10.0"
   }
 }
