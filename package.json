@@ -1,6 +1,6 @@
 {
   "name": "react-icon-rating",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "react component for simple web font backed ratings",
   "main": "index.js",
   "scripts": {
