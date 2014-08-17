@@ -16,8 +16,7 @@
   ],
   "author": "Daryl Lau",
   "license": "MIT",
-  "dependencies": {
-    "envify": "~1.2.1",
-    "react": "~0.10.0"
+  "peerDependencies": {
+    "react": ">=0.10.x <1.x.x"
   }
 }
