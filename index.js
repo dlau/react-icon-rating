@@ -1,19 +1,19 @@
 /** @jsx React.DOM */
 var React = require('react');
 
-var Icon = React.createClass({displayName: 'Icon',
+var Icon = React.createClass({displayName: "Icon",
   render : function(){
     var iStyle = {
       cursor : 'pointer'
     };
     var className = this.props.toggled ? this.props.toggledClassName : this.props.untoggledClassName;
     return (
-      React.DOM.i({className: className, onMouseMove: this.props.onMouseEnter, style: iStyle, onClick: this.props.onClickRating})
+      React.createElement("i", {className: className, onMouseMove: this.props.onMouseEnter, style: iStyle, onClick: this.props.onClickRating})
     );
   }
 });
 
-var IconRating = React.createClass({displayName: 'IconRating',
+var IconRating = React.createClass({displayName: "IconRating",
   getInitialState : function(){
     return {
       currentRating : this.props.currentRating || 0,
@@ -50,7 +50,7 @@ var IconRating = React.createClass({displayName: 'IconRating',
     var toggled = false, rating, halfClassName,
         f = function() {},
         onMouseEnter = this.props.viewOnly ? f : this.onMouseEnter,
-        onClickRating = this.props.viewOnly ? f : this.onClickRating;    
+        onClickRating = this.props.viewOnly ? f : this.onClickRating;
     for(var i=1;i<=this.state.max;++i){
       rating = this.state['currentRating' + (this.state.hovering ? '_hover':'')];
       toggled = i <= Math.round(rating) ? true : false;
@@ -61,11 +61,11 @@ var IconRating = React.createClass({displayName: 'IconRating',
           halfClassName = this.props.halfClassName;
       }
       ratings.push(
-          Icon({key: i, toggledClassName: halfClassName || this.props.toggledClassName, untoggledClassName: this.props.untoggledClassName, onMouseEnter: onMouseEnter.bind(this,i), onClickRating: onClickRating.bind(this,i), toggled: toggled})
+          React.createElement(Icon, {key: i, toggledClassName: halfClassName || this.props.toggledClassName, untoggledClassName: this.props.untoggledClassName, onMouseEnter: onMouseEnter.bind(this,i), onClickRating: onClickRating.bind(this,i), toggled: toggled})
       );
     }
     return (
-      React.DOM.div({onMouseLeave: this.onMouseLeave}, 
+      React.createElement("div", {onMouseLeave: this.onMouseLeave},
         ratings
       )
     );
