@@ -65,7 +65,7 @@ var IconRating = React.createClass({displayName: "IconRating",
       );
     }
     return (
-      React.createElement("div", {onMouseLeave: this.onMouseLeave},
+      React.createElement("div", {className: this.props.className, onMouseLeave: this.onMouseLeave}, 
         ratings
       )
     );
