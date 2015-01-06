@@ -50,7 +50,7 @@ var IconRating = React.createClass({
     var toggled = false, rating, halfClassName,
         f = function() {},
         onMouseEnter = this.props.viewOnly ? f : this.onMouseEnter,
-        onClickRating = this.props.viewOnly ? f : this.onClickRating;    
+        onClickRating = this.props.viewOnly ? f : this.onClickRating;
     for(var i=1;i<=this.state.max;++i){
       rating = this.state['currentRating' + (this.state.hovering ? '_hover':'')];
       toggled = i <= Math.round(rating) ? true : false;
@@ -65,7 +65,7 @@ var IconRating = React.createClass({
       );
     }
     return (
-      <div onMouseLeave={this.onMouseLeave}>
+      <div className={this.props.className} onMouseLeave={this.onMouseLeave}>
         {ratings}
       </div>
     );
