@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var React = require('react');
 
 var Icon = React.createClass({
@@ -53,11 +52,10 @@ var IconRating = React.createClass({
         onClickRating = this.props.viewOnly ? f : this.onClickRating;
     for(var i=1;i<=this.state.max;++i){
       rating = this.state['currentRating' + (this.state.hovering ? '_hover':'')];
-      toggled = i <= Math.round(rating) ? true : false;
+      toggled = i <= Math.round(this.props.halfClassName ? rating + 0.25 : rating);
       halfClassName = null;
       if(this.props.halfClassName &&
-         Math.round(rating) == i &&
-         Math.floor(rating) != rating){
+         ((rating >= i - 0.75) && (rating < i - 0.25))) {
           halfClassName = this.props.halfClassName;
       }
       ratings.push(

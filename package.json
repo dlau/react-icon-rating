@@ -4,6 +4,7 @@
   "description": "react component for simple web font backed ratings",
   "main": "index.js",
   "scripts": {
+    "build": "babel index.jsx -o index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
