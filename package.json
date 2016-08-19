@@ -17,6 +17,9 @@
   "author": "Daryl Lau",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=0.10.x <1.x.x"
+    "react": "15.x"
+  },
+  "dependencies": {
+    "react": "^15.3.0"
   }
 }
