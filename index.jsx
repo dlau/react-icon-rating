@@ -38,11 +38,12 @@ var IconRating = React.createClass({
     });
   },
   onClickRating : function(currentRating, e, id){
+    var newRating = this.state.currentRating_hover
     this.setState({
-      currentRating : this.state.currentRating_hover
+      currentRating : newRating
     });
     if(this.props.onChange){
-      this.props.onChange(currentRating);
+      this.props.onChange(newRating);
     }
   },
   render: function() {
