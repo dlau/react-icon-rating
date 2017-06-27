@@ -1,75 +1,145 @@
-/** @jsx React.DOM */
-var React = require('react');
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-var Icon = React.createClass({displayName: "Icon",
-  render : function(){
-    var iStyle = {
-      cursor : 'pointer'
+const Icon = ({ toggled, toggledClassName, untoggledClassName, onMouseEnter, onClickRating }) => {
+  const iStyle = {
+    cursor: 'pointer',
+  };
+
+  const className = toggled ? toggledClassName : untoggledClassName;
+
+  return (
+    <a
+      href="rating" onClick={e => {
+        e.preventDefault();
+        onClickRating();
+      }}
+      onMouseMove={onMouseEnter}>
+      <i
+        className={className}
+        style={iStyle} />
+    </a>
+  );
+};
+
+Icon.propTypes = {
+  toggled: PropTypes.bool,
+  toggledClassName: PropTypes.string,
+  untoggledClassName: PropTypes.string,
+  onMouseEnter: PropTypes.func,
+  onClickRating: PropTypes.func,
+};
+
+Icon.defaultProps = {
+  toggled: false,
+  toggledClassName: null,
+  untoggledClassName: null,
+  onMouseEnter: null,
+  onClickRating: null,
+};
+
+class IconRating extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentRating: props.currentRating,
+      max: props.max,
+      currentRatingHover: 0,
+      hovering: false,
     };
-    var className = this.props.toggled ? this.props.toggledClassName : this.props.untoggledClassName;
-    return (
-      React.createElement("i", {className: className, onMouseMove: this.props.onMouseEnter, style: iStyle, onClick: this.props.onClickRating})
-    );
+
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.onClickRating = this.onClickRating.bind(this);
   }
-});
 
-var IconRating = React.createClass({displayName: "IconRating",
-  getInitialState : function(){
-    return {
-      currentRating : this.props.currentRating || 0,
-      max : this.props.max || 5,
-      currentRating_hover : 0,
-      hovering : false
-    };
-  },
-  onMouseEnter : function(currentRating, e, id){
-    var rating = currentRating;
-    if((e.nativeEvent.clientX) < (e.target.offsetLeft + (e.target.offsetWidth / 2))){
-      rating -= .5;
+  onMouseEnter(e, currentRating) {
+    let rating = currentRating;
+    if ((e.nativeEvent.clientX) < (e.target.offsetLeft + (e.target.offsetWidth / 2))) {
+      rating -= 0.5;
     }
+
     this.setState({
-      currentRating_hover : rating,
-      hovering : true
+      currentRatingHover: rating,
+      hovering: true,
     });
-  },
-  onMouseLeave : function(currentRating, e, id){
+  }
+
+  onMouseLeave() {
     this.setState({
-      hovering : false
+      hovering: false,
     });
-  },
-  onClickRating : function(currentRating, e, id){
+  }
+
+  onClickRating() {
+    const { currentRating, currentRatingHover } = this.state;
+    const newRating = (currentRatingHover === currentRating) ? 0 : currentRatingHover;
     this.setState({
-      currentRating : this.state.currentRating_hover
+      currentRating: newRating,
     });
-    if(this.props.onChange){
-      this.props.onChange(currentRating);
+
+    if (this.props.onChange) {
+      this.props.onChange(newRating);
     }
-  },
-  render: function() {
-    var ratings = [];
-    var toggled = false, rating, halfClassName,
-        f = function() {},
-        onMouseEnter = this.props.viewOnly ? f : this.onMouseEnter,
-        onClickRating = this.props.viewOnly ? f : this.onClickRating;
-    for(var i=1;i<=this.state.max;++i){
-      rating = this.state['currentRating' + (this.state.hovering ? '_hover':'')];
-      toggled = i <= Math.round(rating) ? true : false;
-      halfClassName = null;
-      if(this.props.halfClassName &&
-         Math.round(rating) == i &&
-         Math.floor(rating) != rating){
-          halfClassName = this.props.halfClassName;
+  }
+
+  render() {
+    const { viewOnly, halfClassName, toggledClassName, untoggledClassName, className } = this.props;
+    const ratings = [];
+    let toggled = false;
+    let rating = 0;
+    let usedHalfClassName = null;
+    const f = () => {};
+    const onMouseEnter = viewOnly ? f : this.onMouseEnter;
+    const onClickRating = viewOnly ? f : this.onClickRating;
+    for (let i = 1; i <= this.state.max; ++i) {
+      rating = this.state[`currentRating${(this.state.hovering ? 'Hover' : '')}`];
+      toggled = i <= Math.round(rating);
+      usedHalfClassName = null;
+      if (halfClassName &&
+        Math.round(rating) === i &&
+        Math.floor(rating) !== rating) {
+        usedHalfClassName = halfClassName;
       }
       ratings.push(
-          React.createElement(Icon, {key: i, toggledClassName: halfClassName || this.props.toggledClassName, untoggledClassName: this.props.untoggledClassName, onMouseEnter: onMouseEnter.bind(this,i), onClickRating: onClickRating.bind(this,i), toggled: toggled})
+        <Icon
+          key={i}
+          toggledClassName={usedHalfClassName || toggledClassName}
+          untoggledClassName={untoggledClassName}
+          onMouseEnter={e => onMouseEnter(e, i)}
+          onClickRating={e => onClickRating(e, i)}
+          toggled={toggled} />
       );
     }
     return (
-      React.createElement("div", {className: this.props.className, onMouseLeave: this.onMouseLeave}, 
-        ratings
-      )
+      <div className={className} onMouseLeave={this.onMouseLeave}>
+        {ratings}
+      </div>
     );
   }
-});
+}
 
-module.exports = IconRating;
+IconRating.propTypes = {
+  currentRating: PropTypes.number,
+  max: PropTypes.number,
+  onChange: PropTypes.func,
+  viewOnly: PropTypes.bool,
+  halfClassName: PropTypes.string,
+  toggledClassName: PropTypes.string,
+  untoggledClassName: PropTypes.string,
+  className: PropTypes.string,
+};
+
+IconRating.defaultProps = {
+  currentRating: 0,
+  max: 5,
+  onChange: () => {},
+  viewOnly: false,
+  halfClassName: null,
+  toggledClassName: null,
+  untoggledClassName: null,
+  className: null,
+};
+
+export default IconRating;
