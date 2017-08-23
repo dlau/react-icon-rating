@@ -16,10 +16,11 @@
   ],
   "author": "Daryl Lau",
   "license": "MIT",
-  "peerDependencies": {
-    "react": ">=0.10.x || 15.x"
-  },
+  "peerDependencies": {},
   "devDependencies": {
-    "react": "^15.3.0"
+    "react": "^15.6.1"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10"
   }
 }
